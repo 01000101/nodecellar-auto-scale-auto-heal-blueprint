@@ -20,12 +20,30 @@ inputs:
   image:
     description: >
       An Openstack Image ID. Tested with a Ubuntu 14.04 image.
-    default: { get_secret: ubuntu_trusty_image }
+    default: ubuntu-1404-trusty
 
   flavor:
     description: >
       An Openstack Flavor ID.
-    default: { get_secret: small_image_flavor }
+    default: m1.medium
+
+  private_network_name:
+    default: nc-private-net
+
+  private_subnet_name:
+    default: nc-private-subnet
+
+  public_network_name:
+    default: nc-public-net
+
+  public_subnet_name:
+    default: nc-public-subnet
+    
+  router_name:
+    default: nc-router
+
+  external_network_name:
+    default: external
 
   agent_user:
     description: The user name of the agent on the instance created from the image.
@@ -204,7 +222,7 @@ node_templates:
     properties:
       openstack_config: *openstack_config
       use_external_resource: true
-      resource_id: { get_secret: private_subnet_name }
+      resource_id: { get_input: private_subnet_name }
     relationships:
       - target: private_network
         type: cloudify.relationships.contained_in
@@ -214,14 +232,14 @@ node_templates:
     properties:
       openstack_config: *openstack_config
       use_external_resource: true
-      resource_id: { get_secret: private_network_name }
+      resource_id: { get_input: private_network_name }
 
   public_subnet:
     type: cloudify.openstack.nodes.Subnet
     properties:
       openstack_config: *openstack_config
       use_external_resource: true
-      resource_id: { get_secret: public_subnet_name }
+      resource_id: { get_input: public_subnet_name }
     relationships:
       - target: public_network
         type: cloudify.relationships.contained_in
@@ -233,14 +251,14 @@ node_templates:
     properties:
       openstack_config: *openstack_config
       use_external_resource: true
-      resource_id: { get_secret: public_network_name }
+      resource_id: { get_input: public_network_name }
 
   router:
     type: cloudify.openstack.nodes.Router
     properties:
       openstack_config: *openstack_config
       use_external_resource: true
-      resource_id: { get_secret: router_name }
+      resource_id: { get_input: router_name }
     relationships:
       - target: external_network
         type: cloudify.relationships.connected_to
@@ -250,7 +268,7 @@ node_templates:
     properties:
       openstack_config: *openstack_config
       use_external_resource: true
-      resource_id: { get_secret: external_network_name }
+      resource_id: { get_input: external_network_name }
     relationships:
       - type: cloudify.relationships.depends_on
         target: cloudify_host_cloud_config
