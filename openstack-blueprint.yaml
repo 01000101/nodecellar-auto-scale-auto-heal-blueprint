@@ -25,7 +25,7 @@ inputs:
   flavor:
     description: >
       An Openstack Flavor ID.
-    default: 	1bd57735-dfd1-4579-824d-697648e54f68
+    default: 1bd57735-dfd1-4579-824d-697648e54f68
 
   private_network_name:
     default: internal-net
