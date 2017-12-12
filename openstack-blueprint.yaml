@@ -20,30 +20,30 @@ inputs:
   image:
     description: >
       An Openstack Image ID. Tested with a Ubuntu 14.04 image.
-    default: ubuntu-1404-trusty
+    default: 2b6a7dc8-a09d-4d51-b27e-82d2a1e36268
 
   flavor:
     description: >
       An Openstack Flavor ID.
-    default: m1.medium
+    default: 	1bd57735-dfd1-4579-824d-697648e54f68
 
   private_network_name:
-    default: nc-private-net
+    default: internal-net
 
   private_subnet_name:
-    default: nc-private-subnet
+    default: internal-subnet
 
   public_network_name:
-    default: nc-public-net
+    default: internal-net
 
   public_subnet_name:
-    default: nc-public-subnet
+    default: internal-subnet
     
   router_name:
-    default: nc-router
+    default: internal
 
   external_network_name:
-    default: external
+    default: internal-floating-ips
 
   agent_user:
     description: The user name of the agent on the instance created from the image.
